@@ -1,13 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -16,12 +6,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -33,7 +17,7 @@ ZSH_THEME="robbyrussell"
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
 # zstyle ':omz:update' mode auto      # update automatically without asking
-zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+zstyle ':omz:update' mode reminder # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
 # zstyle ':omz:update' frequency 13
@@ -77,7 +61,7 @@ zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
- plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions)
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -107,7 +91,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Add zsh-syntax-highlighting and 
+# Add zsh-syntax-highlighting and
 
 # custom paths
 hash -d p=~/Projects
@@ -117,7 +101,6 @@ hash -d p=~/Projects
 function my-ip() {
     curl ifconfig.me
 }
-
 
 function clonedev() {
     if [ -z "$1" ]; then
@@ -133,7 +116,6 @@ function clonedev() {
     pnpm install -r || return 1
     echo "Repository setup completed. To start the dev server, run: pnpm dev"
 }
-
 
 function new-dev-terminal() {
     open "warp://launch/~/.warp/launch_configurations/dev-server.yaml"
@@ -153,75 +135,62 @@ function c() {
     fi
 }
 
-
 # Custom aliases
 alias l='eza -lah'
 alias ls=eza
-alias rm=trash # movees files to trash instead of deleting them
+alias rm=trash # moves files to trash instead of deleting them
 alias p=pnpm
 alias refresh='source ~/.zshrc'
 alias g=git
 
-
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-alias python=/usr/bin/python3
-
-# pnpm
 export PNPM_HOME="/Users/kyrre/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-# increase node max memory
 export NODE_OPTIONS="--max-old-space-size=8096"
-
-# source <(tea --magic=zsh)  #docs.tea.xyz/magic
-
-# bun completions
-[ -s "/Users/kyrre/.bun/_bun" ] && source "/Users/kyrre/.bun/_bun"
-
-# bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/kyrre/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/kyrre/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/kyrre/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/kyrre/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-if [ "$(arch)" = "arm64" ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-    eval "$(/usr/local/bin/brew shellenv)"
-fi
-
-
-
-PATH=~/.console-ninja/.bin:$PATH
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 export LDFLAGS="-L/opt/homebrew/opt/jpeg/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"
 export PYTHON=/opt/homebrew/bin/python3
 
+# Lazy load nvm
+nvm() {
+    unset -f nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    nvm "$@"
+}
+
+# pnpm
+case ":$PATH:" in
+*":$PNPM_HOME:"*) ;;
+*) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# bun completions
+[ -s "/Users/kyrre/.bun/_bun" ] && source "/Users/kyrre/.bun/_bun"
+
+# bun
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+brew() {
+    unset -f brew
+    if [ "$(arch)" = "arm64" ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+    brew "$@"
+}
+
+PATH=~/.console-ninja/.bin:$PATH
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
-source ~/powerlevel10k/powerlevel10k.zsh-theme
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+bun() {
+    unset -f bun
+    [ -s "/Users/kyrre/.bun/_bun" ] && source "/Users/kyrre/.bun/_bun"
+    export PATH="$BUN_INSTALL/bin:$PATH"
+    bun "$@"
+}
