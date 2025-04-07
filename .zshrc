@@ -167,8 +167,8 @@ nvm() {
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+*":$PNPM_HOME:"*) ;;
+*) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 
@@ -191,7 +191,7 @@ brew() {
 PATH=~/.console-ninja/.bin:$PATH
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-eval "$(fzf --zsh)"
+source <(fzf --zsh)
 eval "$(zoxide init --cmd cd zsh)"
 
 bun() {
@@ -208,14 +208,13 @@ bun() {
 # Installation: gt completion >> ~/.zshrc
 #    or gt completion >> ~/.zprofile on OSX.
 #
-_gt_yargs_completions()
-{
-  local reply
-  local si=$IFS
-  IFS=$'
-' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" gt --get-yargs-completions "${words[@]}"))
-  IFS=$si
-  _describe 'values' reply
+_gt_yargs_completions() {
+    local reply
+    local si=$IFS
+    IFS=$'
+' reply=($(COMP_CWORD="$((CURRENT - 1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" gt --get-yargs-completions "${words[@]}"))
+    IFS=$si
+    _describe 'values' reply
 }
 compdef _gt_yargs_completions gt
 ###-end-gt-completions-###
