@@ -1,0 +1,3 @@
+automatically_check_for_updates: true
+hide_welcome_screen: false
+ignore_update_to_version: null

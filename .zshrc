@@ -143,8 +143,13 @@ alias p=pnpm
 alias refresh='source ~/.zshrc'
 alias g=git
 
+alias y='yarn'
+alias yw='yarn workspace'
+alias ywd='yarn workspace dashboard'
+alias ywc='yarn workspace candidate'
+alias ywt='yarn workspace tests'
+alias lz='lazygit'
 export NVM_DIR="$HOME/.nvm"
-export PNPM_HOME="/Users/kyrre/Library/pnpm"
 export NODE_OPTIONS="--max-old-space-size=8096"
 export BUN_INSTALL="$HOME/.bun"
 export LDFLAGS="-L/opt/homebrew/opt/jpeg/lib"
@@ -160,14 +165,15 @@ nvm() {
 }
 
 # pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
-*":$PNPM_HOME:"*) ;;
-*) export PATH="$PNPM_HOME:$PATH" ;;
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 
 # bun completions
-[ -s "/Users/kyrre/.bun/_bun" ] && source "/Users/kyrre/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -190,7 +196,28 @@ eval "$(zoxide init --cmd cd zsh)"
 
 bun() {
     unset -f bun
-    [ -s "/Users/kyrre/.bun/_bun" ] && source "/Users/kyrre/.bun/_bun"
+    [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
     export PATH="$BUN_INSTALL/bin:$PATH"
     bun "$@"
 }
+#compdef gt
+###-begin-gt-completions-###
+#
+# yargs command completion script
+#
+# Installation: gt completion >> ~/.zshrc
+#    or gt completion >> ~/.zprofile on OSX.
+#
+_gt_yargs_completions()
+{
+  local reply
+  local si=$IFS
+  IFS=$'
+' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" gt --get-yargs-completions "${words[@]}"))
+  IFS=$si
+  _describe 'values' reply
+}
+compdef _gt_yargs_completions gt
+###-end-gt-completions-###
+
+export PATH="$HOME/bin:$PATH"
