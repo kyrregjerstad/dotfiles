@@ -501,5 +501,21 @@
         }
       ]
     }
-  ]
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "l"],
+      "commands": [
+        {
+          "command": "editor.action.insertSnippet",
+          "args": {
+            "snippet": "${TM_SELECTED_TEXT}\n\nconsole.log('${TM_SELECTED_TEXT}', ${TM_SELECTED_TEXT});"
+          }
+        },
+        "extension.vim_escape",
+        "cursorEnd"
+      ]
+    }
+  ],
+  "xstate.nestTypegenFiles": false
 }
