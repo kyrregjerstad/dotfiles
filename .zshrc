@@ -64,7 +64,7 @@ alias gca='git commit --amend --no-edit'
 alias gP='git push'
 alias gp='git pull'
 alias gl='git log --graph --all --pretty=format:"%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n"'
-
+alias v='nvim'
 
 # %h -- commit hash
 # %an -- author name
