@@ -29,8 +29,7 @@
     "activityBar.activeBackground": "#2b3747",
     "activityBar.border": "#263243",
     "activityBar.dropBackground": "#2b3747",
-    "editorError.foreground": "#ffc400",
-    "editorError.border": "#ff0000",
+    "editorError.foreground": "#ff0000",
     "editorRuler.foreground": "#ff4081"
   },
   "editor.tokenColorCustomizations": {
@@ -130,8 +129,7 @@
   "editor.guides.bracketPairs": false,
   "githubPullRequests.createOnPublishBranch": "never",
   "console-ninja.toolsToEnableSupportAutomaticallyFor": {
-    "live-server": true,
-    "live-preview": true
+    "live-server": true
   },
   "editor.inlineSuggest.enabled": true,
   "path-intellisense.mappings": {
@@ -198,6 +196,7 @@
     "Hotjar",
     "hotspot",
     "iconify",
+    "ilike",
     "imdb",
     "immer",
     "inary",
@@ -349,13 +348,11 @@
   "redhat.telemetry.enabled": true,
   "prettier.printWidth": 90,
   "git.ignoreRebaseWarning": true,
-  "terminal.external.osxExec": "ghostty.app",
+  "terminal.external.osxExec": "warp.app",
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
   },
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
-  },
+
   "workbench.iconTheme": "vscode-icons",
   "githubPullRequests.pullBranch": "never",
   "task.allowAutomaticTasks": "on",
@@ -411,9 +408,7 @@
     "*.sdb": "${capture}.${extname}-*",
     "*.s3db": "${capture}.${extname}-*"
   },
-  "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer"
-  },
+
   "editor.linkedEditing": true,
   "files.exclude": {
     "**/.yarn": true
@@ -447,6 +442,8 @@
   },
   "tailwind-fold.autoFold": false,
   "tailwind-fold.unfoldIfLineSelected": true,
+  "problems.sortOrder": "severity",
+  "errorLens.enabledDiagnosticLevels": ["error", "warning"],
   "editor.lineNumbers": "relative",
   "vim.useSystemClipboard": true,
   "extensions.experimental.affinity": {
@@ -454,6 +451,14 @@
   },
   "vim.leader": "<space>",
   "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["[", "d"],
+      "commands": ["editor.action.marker.prev"]
+    },
+    {
+      "before": ["]", "d"],
+      "commands": ["editor.action.marker.next"]
+    },
     {
       "before": ["<leader>", "r", "s"],
       "commands": ["editor.action.rename"]
@@ -500,6 +505,18 @@
           }
         }
       ]
+    },
+    {
+      "before": ["<leader>", "t"],
+      "commands": ["workbench.action.quickOpenPreviousRecentlyUsedEditor"]
+    },
+    {
+      "before": ["<leader>", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "p"],
+      "commands": ["workbench.action.showCommands"]
     }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
