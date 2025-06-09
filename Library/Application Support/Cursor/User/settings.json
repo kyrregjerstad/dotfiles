@@ -534,5 +534,7 @@
       ]
     }
   ],
-  "xstate.nestTypegenFiles": false
+  "xstate.nestTypegenFiles": false,
+  "cursor.cpp.enablePartialAccepts": true,
+  "cursor.composer.shouldAllowCustomModes": true
 }

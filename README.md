@@ -32,3 +32,5 @@ then use GNU stow to create symlinks
 ```zsh
 stow .
 ```
+
+The directory structure in the dotfiles directory needs to be the same as in the parent root dir. `~/config/123/settings.abc` will be `~/dotfiles/config/123/settings.abc`
