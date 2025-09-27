@@ -93,6 +93,9 @@ alias cdr='cd $(git rev-parse --show-toplevel)'
 
 alias lz='lazygit'
 
+# dump brewfile and add to git
+alias brewup='cd ~/dotfiles/brew && brew bundle dump --force && git add Brewfile'
+
 export NODE_OPTIONS="--max-old-space-size=8096"
 export BUN_INSTALL="$HOME/.bun"
 export LDFLAGS="-L/opt/homebrew/opt/jpeg/lib"
