@@ -6,7 +6,7 @@
   "explorer.confirmDelete": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "security.workspace.trust.untrustedFiles": "open",
-  "workbench.colorTheme": "One Dark Pro",
+  "workbench.colorTheme": "Cursor Dark Midnight",
   "editor.fontSize": 16,
   "vsicons.dontShowNewVersionMessage": true,
   "workbench.colorCustomizations": {
@@ -164,6 +164,8 @@
     "contentful",
     "crossenv",
     "csstools",
+    "Cuelist",
+    "cuelists",
     "culori",
     "daisyui",
     "Daizy",
@@ -218,6 +220,7 @@
     "libsql",
     "Likert",
     "Linsley",
+    "Logto",
     "Lorekeeper",
     "lucide",
     "matcap",
@@ -316,6 +319,7 @@
     "vercel",
     "vevr",
     "Vipps",
+    "virtua",
     "waku",
     "wavesurfer",
     "webp",
@@ -374,7 +378,7 @@
   "workbench.tree.indent": 16,
   "prettier.singleQuote": true,
   "workbench.sideBar.location": "right",
-  "window.commandCenter": false,
+  "window.commandCenter": true,
   "svelte.plugin.svelte.format.config.singleQuote": true,
   "workbench.editor.customLabels.patterns": {
     "**/src/app/**/page.tsx": "${dirname} - Page",
@@ -446,9 +450,6 @@
   "errorLens.enabledDiagnosticLevels": ["error", "warning"],
   "editor.lineNumbers": "relative",
   "vim.useSystemClipboard": true,
-  "extensions.experimental.affinity": {
-    "vscodevim.vim": 1
-  },
   "vim.leader": "<space>",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
@@ -536,5 +537,26 @@
   ],
   "xstate.nestTypegenFiles": false,
   "cursor.cpp.enablePartialAccepts": true,
-  "cursor.composer.shouldAllowCustomModes": true
+  "cursor.composer.shouldAllowCustomModes": true,
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "typescript.tsserver.enableTracing": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  }
 }
