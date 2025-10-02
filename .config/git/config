@@ -28,6 +28,7 @@
   branch = true
   showStash = true
   showUntrackedFiles = all
+  submoduleSummary = true
 
 [diff]
   context = 3
@@ -56,6 +57,10 @@
 [push]
   autoSetupRemote = true
   default = current
+  recurseSubmodules = on-demand
+
+[submodule]
+  recurse = true
 
 [pull]
   default = current
