@@ -2,3 +2,5 @@ theme = Catppuccin Mocha
 background-opacity = 0.6
 background-blur = 12
 font-family = "JetBrains Mono"
+macos-titlebar-proxy-icon = hidden
+title = " "
