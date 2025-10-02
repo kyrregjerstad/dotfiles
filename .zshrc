@@ -92,6 +92,7 @@ alias t=turbo
 alias cdr='cd $(git rev-parse --show-toplevel)'
 
 alias lz='lazygit'
+alias z='zellij'
 
 # dump brewfile and add to git
 alias brewup='cd ~/dotfiles/brew && brew bundle dump --force && git add Brewfile'
@@ -133,7 +134,12 @@ PATH=~/.console-ninja/.bin:$PATH
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source <(fzf --zsh)
-eval "$(zoxide init --cmd cd zsh)"
+
+# disable zodxide for claude-code
+# https://github.com/anthropics/claude-code/issues/2632
+if [[ "$CLAUDECODE" != "1" ]]; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
 
 eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
 
