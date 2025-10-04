@@ -78,6 +78,7 @@ alias v='nvim'
 alias gb='git branch'
 
 alias gco='git checkout'
+alias gcob='git checkout $(git branch --all | rg -v HEAD | sed "s/remotes\/origin\///" | sed "s/^\* //" | sort -u | fzf --reverse --preview "git log --oneline --color=always {}" --preview-window=right:60%)'
 alias gi='git init'
 alias gcl='git clone'
 
