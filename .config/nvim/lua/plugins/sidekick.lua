@@ -9,8 +9,9 @@ return {
     cli = {
       mux = {
         backend = "zellij", -- or "tmux" if you prefer
-        enabled = true,
+        enabled = false,
       },
+      watch = true,
     },
   },
   keys = {
