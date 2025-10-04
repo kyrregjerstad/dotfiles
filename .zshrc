@@ -104,7 +104,7 @@ export LDFLAGS="-L/opt/homebrew/opt/jpeg/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"
 export XDG_CONFIG_HOME="$HOME/.config"
-
+export MANPAGER="nvim +Man!"
 export PYTHON=/opt/homebrew/bin/python3
 
 # pnpm
