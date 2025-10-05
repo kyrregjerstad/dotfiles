@@ -115,6 +115,9 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+
+eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
+
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
@@ -142,7 +145,6 @@ if [[ "$CLAUDECODE" != "1" ]]; then
     eval "$(zoxide init --cmd cd zsh)"
 fi
 
-eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
 
 bun() {
     unset -f bun
