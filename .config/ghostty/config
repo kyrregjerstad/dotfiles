@@ -4,3 +4,10 @@ background-blur = 16
 font-family = "JetBrains Mono"
 macos-titlebar-proxy-icon = hidden
 title = " "
+
+keybind = cmd+d=unbind
+keybind = cmd+shift+d=unbind
+keybind = cmd+shift+right=new_split:right
+keybind = cmd+shift+down=new_split:down
+keybind = cmd+shift+left=new_split:left
+keybind = cmd+shift+up=new_split:up

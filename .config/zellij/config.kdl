@@ -1,6 +1,7 @@
 keybinds clear-defaults=true {
     locked {
-        bind "Super alt g" { SwitchToMode "normal"; }
+        bind "Super l" { SwitchToMode "normal"; }
+        bind "super d" { NewPane; }
     }
     pane {
         bind "left" { MoveFocus "left"; }

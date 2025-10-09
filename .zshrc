@@ -78,6 +78,7 @@ alias v='nvim'
 alias gb='git branch'
 
 alias gco='git checkout'
+alias gcn='git checkout -b'
 alias gcob='git checkout $(git branch --all | rg -v HEAD | sed "s/remotes\/origin\///" | sed "s/^\* //" | sort -u | fzf --reverse --preview "git log --oneline --color=always {}" --preview-window=right:60%)'
 alias gi='git init'
 alias gcl='git clone'
@@ -95,6 +96,41 @@ alias cdr='cd $(git rev-parse --show-toplevel)'
 alias lz='lazygit'
 alias z='zellij'
 
+# Vi mode
+bindkey -v
+
+# Reduce key delay when switching modes (optional but recommended)
+export KEYTIMEOUT=1
+
+# Clean up any existing starship hooks before reinitializing
+if typeset -f starship_zle-keymap-select > /dev/null; then
+  # Starship is already loaded, skip initialization
+  :
+else
+  eval "$(starship init zsh)"
+fi
+# Vi mode cursor shape indicator
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'  # Block cursor for normal mode
+  elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'  # Beam cursor for insert mode
+  fi
+}
+zle -N zle-keymap-select
+
+# Start with beam cursor on each new prompt
+function zle-line-init {
+  echo -ne '\e[5 q'
+}
+zle -N zle-line-init
+
+# Load starship only once to avoid function nesting
+type starship_zle-keymap-select >/dev/null || \
+  {
+    eval "$(starship init zsh)"
+  }
+
 # dump brewfile and add to git
 alias brewup='cd ~/dotfiles/brew && brew bundle dump --force && git add Brewfile'
 
@@ -106,6 +142,7 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"
 export XDG_CONFIG_HOME="$HOME/.config"
 export MANPAGER="nvim +Man!"
 export PYTHON=/opt/homebrew/bin/python3
+export EDITOR=nvim
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
@@ -185,4 +222,24 @@ if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/op
 if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
     eval "$(starship init zsh)"
 fi
+
 export PATH="$HOME/.local/bin:$PATH"
+
+echo 'eval "$(atuin init zsh)"' >> ~/.zshrc
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
