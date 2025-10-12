@@ -225,21 +225,5 @@ fi
 
 export PATH="$HOME/.local/bin:$PATH"
 
-echo 'eval "$(atuin init zsh)"' >> ~/.zshrc
 eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
-eval "$(atuin init zsh)"
+export TMPDIR=/tmp
