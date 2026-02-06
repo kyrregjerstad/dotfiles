@@ -1,5 +1,6 @@
 return {
   "folke/sidekick.nvim",
+  cond = not vim.g.vscode,
   event = "VeryLazy",
   opts = {
     suggestion = {

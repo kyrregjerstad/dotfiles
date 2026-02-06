@@ -1,6 +1,7 @@
 [user]
   name = Kyrre Gjerstad
   email = kyrregjerstad@gmail.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH7gIU8DMiFMrfjbF7S027rBLWbAPw5ut8zNRowD5RWD
 
 [core]
   compression = 9
@@ -91,3 +92,11 @@
 
 [tag]
   sort = -taggerdate
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
+[coderabbit]
+	machineId = cli/cba69f9884ab496982b6e9393f65066e

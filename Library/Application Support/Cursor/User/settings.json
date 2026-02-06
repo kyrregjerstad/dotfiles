@@ -147,14 +147,18 @@
     "artic",
     "authcheck",
     "autoincrement",
+    "Autolock",
     "Autosize",
+    "bitfocus",
     "blurhash",
     "Brevo",
     "Broadphase",
     "Brreg",
+    "BSXS",
     "Caddyfile",
     "casl",
     "chakra",
+    "chrono",
     "cloudinary",
     "clsx",
     "codemod",
@@ -180,11 +184,13 @@
     "Eiendomsmeglere",
     "ELEVENLABS",
     "equippable",
+    "evalite",
     "Figtree",
     "FLIPSIGHT",
     "flowbite",
     "fontsource",
     "futeum",
+    "geospatial",
     "Gjerstad",
     "GLTF",
     "GPTAPI",
@@ -192,11 +198,14 @@
     "groqd",
     "gsap",
     "Hasher",
+    "hdel",
+    "hget",
     "Holidaze",
     "Hono",
     "hookform",
     "Hotjar",
     "hotspot",
+    "hset",
     "iconify",
     "ilike",
     "imdb",
@@ -204,6 +213,7 @@
     "inary",
     "Initializable",
     "initializables",
+    "Inspectable",
     "instanceof",
     "jetbrains",
     "Karabiner",
@@ -230,6 +240,7 @@
     "metalness",
     "Metascore",
     "Mgmt",
+    "Millis",
     "Mizu",
     "mobilepay",
     "naevner",
@@ -243,6 +254,7 @@
     "oklch",
     "okolor",
     "okolors",
+    "ollama",
     "ONDEMAND",
     "openai",
     "Organisation",
@@ -267,9 +279,11 @@
     "Ratelimit",
     "raycast",
     "Raycaster",
+    "rebac",
     "RECAPCHA",
     "refac",
     "rehype",
+    "Retryable",
     "rgba",
     "Roboto",
     "sadd",
@@ -277,12 +291,14 @@
     "Scrollability",
     "Scroller",
     "SENDGRID",
+    "setex",
     "Shiki",
     "Shortcode",
     "sindresorhus",
     "skeletonlabs",
     "Skippable",
     "sluggified",
+    "Somes",
     "Sonner",
     "soundcloud",
     "spacebar",
@@ -307,6 +323,7 @@
     "TRPC",
     "turso",
     "twotone",
+    "typegpu",
     "uncategorized",
     "uneccesarry",
     "unfollow",
@@ -541,14 +558,11 @@
   "cursor.composer.shouldChimeAfterChatFinishes": true,
   "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
   "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "typescript.tsserver.enableTracing": true,
   "[typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[dockercompose]": {
     "editor.insertSpaces": true,
@@ -559,5 +573,20 @@
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
-  "diffEditor.ignoreTrimWhitespace": true
+  "diffEditor.ignoreTrimWhitespace": true,
+  "remote.SSH.remotePlatform": {
+    "proxmox": "linux"
+  },
+  "cursor.composer.textSizeScale": 1.15,
+  "class-collapse.functionality.enable": false,
+  "claudeCode.preferredLocation": "panel",
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma-insider"
+  },
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  }
 }

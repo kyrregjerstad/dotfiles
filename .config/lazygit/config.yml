@@ -21,6 +21,6 @@ gui:
     searchingActiveBorderColor:
       - "#f9e2af"
 git:
-  paging:
-    colorArg: always
-    pager: diff-so-fancy
+  pagers:
+    - colorArg: always
+      pager: diff-so-fancy

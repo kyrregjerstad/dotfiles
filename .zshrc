@@ -38,6 +38,13 @@ function take {
     cd $1
 }
 
+# Start new branch from latest main (reads clipboard if no arg)
+newbranch() {
+    local branch="${1:-$(pbpaste)}"
+    git checkout main && git pull && git checkout -b "$branch"
+}
+alias nb='newbranch'
+
 # custom cursor launcher
 function c() {
     if [ -d "$1" ]; then
@@ -59,7 +66,8 @@ alias gc='git commit'
 alias gcm='git commit -m'
 alias gca='git commit --amend --no-edit'
 
-alias gP='git push'
+unalias gP 2>/dev/null
+gP() { git push -u origin "$(git branch --show-current)" }
 alias gp='git pull'
 alias gl='git log --graph --all --pretty=format:"%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n"'
 # %h -- commit hash
@@ -89,12 +97,63 @@ alias rm=trash # moves files to trash instead of deleting them
 alias p=pnpm
 alias refresh='source ~/.zshrc'
 alias t=turbo
+alias b=bun
 
 # cd to root of git repo
 alias cdr='cd $(git rev-parse --show-toplevel)'
 
+alias nz='nvim ~/.zshrc'
+
 alias lz='lazygit'
 alias z='zellij'
+alias cl='claude'
+
+# Package manager detection
+pm() {
+  if [[ -f "bun.lockb" || -f "bun.lock" ]]; then
+    echo "bun"
+  elif [[ -f "pnpm-lock.yaml" ]]; then
+    echo "pnpm"
+  elif [[ -f "yarn.lock" ]]; then
+    echo "yarn"
+  elif [[ -f "package-lock.json" || -f "package.json" ]]; then
+    echo "npm"
+  else
+    echo ""
+  fi
+}
+
+run() {
+  local mgr=$(pm)
+  if [[ -z "$mgr" ]]; then
+    echo "No package manager detected"
+    return 1
+  fi
+  $mgr run "$@"
+}
+
+add() {
+  local mgr=$(pm)
+  if [[ -z "$mgr" ]]; then
+    echo "No package manager detected"
+    return 1
+  fi
+  if [[ "$mgr" == "npm" ]]; then
+    npm install "$@"
+  else
+    $mgr add "$@"
+  fi
+}
+
+alias d='run dev'
+alias build='run build'
+alias check='run check'
+
+# Global aliases
+alias -g NE='2>/dev/null'
+alias -g JQ=' | jq'
+alias -g C=' | pbcopy'
+alias -g P='pbpaste | '
 
 # Vi mode
 bindkey -v
@@ -102,13 +161,6 @@ bindkey -v
 # Reduce key delay when switching modes (optional but recommended)
 export KEYTIMEOUT=1
 
-# Clean up any existing starship hooks before reinitializing
-if typeset -f starship_zle-keymap-select > /dev/null; then
-  # Starship is already loaded, skip initialization
-  :
-else
-  eval "$(starship init zsh)"
-fi
 # Vi mode cursor shape indicator
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
@@ -125,11 +177,6 @@ function zle-line-init {
 }
 zle -N zle-line-init
 
-# Load starship only once to avoid function nesting
-type starship_zle-keymap-select >/dev/null || \
-  {
-    eval "$(starship init zsh)"
-  }
 
 # dump brewfile and add to git
 alias brewup='cd ~/dotfiles/brew && brew bundle dump --force && git add Brewfile'
@@ -143,7 +190,10 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export MANPAGER="nvim +Man!"
 export PYTHON=/opt/homebrew/bin/python3
 export EDITOR=nvim
+export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+export HUSKY=0
 
+[ -f ~/.secrets ] && source ~/.secrets
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
@@ -172,8 +222,6 @@ brew() {
 }
 
 PATH=~/.console-ninja/.bin:$PATH
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 source <(fzf --zsh)
 
 # disable zodxide for claude-code
@@ -211,19 +259,11 @@ compdef _gt_yargs_completions gt
 export PATH="$HOME/bin:$PATH"
 export PATH=$PATH:$HOME/go/bin
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc'; fi
-
-
-# Only initialize starship if running in Ghostty
-if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
-    eval "$(starship init zsh)"
-fi
+eval "$(starship init zsh)"
 
 export PATH="$HOME/.local/bin:$PATH"
 
-eval "$(atuin init zsh)"
+if [[ "$TERM_PROGRAM" != "WarpTerminal" ]]; then
+    eval "$(atuin init zsh)"
+fi
 export TMPDIR=/tmp

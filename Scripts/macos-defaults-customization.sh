@@ -36,3 +36,6 @@ defaults write com.apple.dock autohide-time-modifier -float 0.2
 killall Dock
 
 echo "Dock auto-hide delay removed!"
+
+# Disable press and hold
+defaults write com.todesktop.230313mzl4w4u92 ApplePressAndHoldEnabled -bool false
