@@ -72,7 +72,8 @@ add_one() {
 
     green "tracking: ~/$rel"
     run mkdir -p "$(dirname "$dest")"
-    run cp -R "$abs" "$dest"
+    run mv "$abs" "$dest"
+    run ln -s "$dest" "$abs"
 }
 
 cmd_add() {
@@ -101,8 +102,6 @@ cmd_add() {
         add_one "$abs"
     fi
 
-    run stow --adopt --dir="$DOTFILES" --target="$HOME" -R .
-
     if $AUTO_COMMIT; then
         run git -C "$DOTFILES" add -A
         run git -C "$DOTFILES" commit -m "track $(rel_to_home "$abs")"
@@ -123,15 +122,10 @@ cmd_rm() {
 
     green "untracking: ~/$rel"
 
-    # remove symlink, copy file back
     if [[ -L "$abs" ]]; then
         run rm "$abs"
     fi
-    run cp -R "$src" "$abs"
-    run rm -rf "$src"
-
-    # re-stow to clean up
-    run stow --dir="$DOTFILES" --target="$HOME" -R .
+    run mv "$src" "$abs"
 
     if $AUTO_COMMIT; then
         run git -C "$DOTFILES" add -A
