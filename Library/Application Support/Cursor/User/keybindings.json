@@ -2,6 +2,19 @@
 [
   {
     "key": "cmd+i",
-    "command": "composerMode.agent"
-  }
+    "command": "composerMode.agent",
+  },
+  {
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\u001b\r",
+    },
+    "when": "terminalFocus",
+  },
+  {
+    "key": "shift+cmd+enter",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "panelAlignment == 'center' || panelPosition != 'bottom' && panelPosition != 'top'",
+  },
 ]
