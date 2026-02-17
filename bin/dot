@@ -1,0 +1,208 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES="$HOME/dotfiles"
+DRY_RUN=false
+AUTO_COMMIT=false
+INTERACTIVE=false
+
+red()    { printf '\033[31m%s\033[0m\n' "$*"; }
+green()  { printf '\033[32m%s\033[0m\n' "$*"; }
+yellow() { printf '\033[33m%s\033[0m\n' "$*"; }
+dim()    { printf '\033[2m%s\033[0m\n' "$*"; }
+
+die() { red "error: $*" >&2; exit 1; }
+
+usage() {
+    cat <<'EOF'
+Usage: dot <command> [options] <path>
+
+Commands:
+  add <path>        Track a file/directory in dotfiles
+  rm <path>         Untrack a file (copy back to ~, remove from repo)
+  status            Show broken symlinks and untracked config files
+  list              List all tracked files
+
+Options:
+  -i, --interactive  Pick files with fzf (for directories)
+  -n, --dry-run     Show what would happen without doing it
+  -c, --commit      Auto git-commit after add/rm
+  -h, --help        Show this help
+EOF
+}
+
+resolve_path() {
+    local input="$1"
+    # expand ~ manually
+    input="${input/#\~/$HOME}"
+    # make absolute
+    if [[ "$input" != /* ]]; then
+        input="$(cd "$(dirname "$input")" && pwd)/$(basename "$input")"
+    fi
+    # strip trailing slashes
+    echo "${input%/}"
+}
+
+# Get path relative to $HOME, or fail if outside ~
+rel_to_home() {
+    local abs="$1"
+    if [[ "$abs" != "$HOME"/* ]]; then
+        die "$abs is not inside \$HOME"
+    fi
+    echo "${abs#$HOME/}"
+}
+
+run() {
+    if $DRY_RUN; then
+        dim "  would run: $*"
+    else
+        "$@"
+    fi
+}
+
+add_one() {
+    local abs="$1" rel dest
+    [[ -e "$abs" ]] || die "not found: $abs"
+    [[ -L "$abs" ]] && { yellow "skipping symlink: $abs"; return 0; }
+
+    rel="$(rel_to_home "$abs")"
+    dest="$DOTFILES/$rel"
+
+    [[ -e "$dest" ]] && { yellow "already tracked: $rel"; return 0; }
+
+    green "tracking: ~/$rel"
+    run mkdir -p "$(dirname "$dest")"
+    run cp -R "$abs" "$dest"
+}
+
+cmd_add() {
+    [[ $# -ge 1 ]] || die "usage: dot add [-i] <path>"
+    local abs
+
+    abs="$(resolve_path "$1")"
+    [[ -e "$abs" ]] || die "not found: $abs"
+
+    if $INTERACTIVE; then
+        [[ -d "$abs" ]] || die "-i only works with directories"
+        command -v fzf >/dev/null || die "fzf is required for interactive mode"
+
+        local selections
+        selections=$(find "$abs" -mindepth 1 -maxdepth 3 -not -path '*/.git/*' -not -name '.DS_Store' \
+            | sed "s|^$abs/||" | sort \
+            | fzf --multi --reverse --header="Select files to track (TAB to multi-select)")
+
+        [[ -z "$selections" ]] && { dim "nothing selected"; return 0; }
+
+        while IFS= read -r sel; do
+            add_one "$abs/$sel"
+        done <<< "$selections"
+    else
+        [[ -L "$abs" ]] && die "already a symlink: $abs"
+        add_one "$abs"
+    fi
+
+    run stow --adopt --dir="$DOTFILES" --target="$HOME" -R .
+
+    if $AUTO_COMMIT; then
+        run git -C "$DOTFILES" add -A
+        run git -C "$DOTFILES" commit -m "track $(rel_to_home "$abs")"
+    fi
+
+    $DRY_RUN || green "done"
+}
+
+cmd_rm() {
+    [[ $# -ge 1 ]] || die "usage: dot rm <path>"
+    local abs rel src
+
+    abs="$(resolve_path "$1")"
+    rel="$(rel_to_home "$abs")"
+    src="$DOTFILES/$rel"
+
+    [[ -e "$src" ]] || die "not tracked: $rel"
+
+    green "untracking: ~/$rel"
+
+    # remove symlink, copy file back
+    if [[ -L "$abs" ]]; then
+        run rm "$abs"
+    fi
+    run cp -R "$src" "$abs"
+    run rm -rf "$src"
+
+    # re-stow to clean up
+    run stow --dir="$DOTFILES" --target="$HOME" -R .
+
+    if $AUTO_COMMIT; then
+        run git -C "$DOTFILES" add -A
+        run git -C "$DOTFILES" commit -m "untrack $rel"
+    fi
+
+    $DRY_RUN || green "done — ~/$rel is no longer tracked"
+}
+
+cmd_status() {
+    echo "Broken symlinks in ~/ pointing to dotfiles:"
+    local found=false
+    while IFS= read -r link; do
+        if [[ "$(readlink "$link")" == "$DOTFILES"/* ]] && [[ ! -e "$link" ]]; then
+            yellow "  broken: $link -> $(readlink "$link")"
+            found=true
+        fi
+    done < <(find "$HOME" -maxdepth 4 -type l 2>/dev/null)
+    $found || dim "  none"
+
+    echo ""
+    echo "Unstowed files in dotfiles (not linked):"
+    found=false
+    while IFS= read -r file; do
+        local rel="${file#$DOTFILES/}"
+        local target="$HOME/$rel"
+        if [[ ! -L "$target" ]]; then
+            yellow "  $rel"
+            found=true
+        fi
+    done < <(find "$DOTFILES" -type f \
+        -not -path '*/.git/*' \
+        -not -name '.gitignore' \
+        -not -name '.stow-local-ignore' \
+        -not -name '.DS_Store' \
+        -not -name 'README.md' \
+        2>/dev/null)
+    $found || dim "  none"
+}
+
+cmd_list() {
+    find "$DOTFILES" -type f \
+        -not -path '*/.git/*' \
+        -not -name '.gitignore' \
+        -not -name '.stow-local-ignore' \
+        -not -name '.DS_Store' \
+        -not -name 'README.md' \
+        2>/dev/null | while IFS= read -r file; do
+        echo "  ${file#$DOTFILES/}"
+    done
+}
+
+# --- parse global flags ---
+args=()
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -i|--interactive) INTERACTIVE=true; shift ;;
+        -n|--dry-run) DRY_RUN=true; shift ;;
+        -c|--commit)  AUTO_COMMIT=true; shift ;;
+        -h|--help)    usage; exit 0 ;;
+        *)            args+=("$1"); shift ;;
+    esac
+done
+set -- "${args[@]}"
+
+[[ $# -ge 1 ]] || { usage; exit 1; }
+
+case "$1" in
+    add)    shift; cmd_add "$@" ;;
+    rm)     shift; cmd_rm "$@" ;;
+    status) cmd_status ;;
+    list|ls) cmd_list ;;
+    *)      die "unknown command: $1" ;;
+esac
