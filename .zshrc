@@ -107,6 +107,7 @@ alias nz='nvim ~/.zshrc'
 alias lz='lazygit'
 alias z='zellij'
 alias cl='claude'
+alias cld='claude --dangerously-skip-permissions'
 
 # Package manager detection
 pm() {
