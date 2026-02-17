@@ -1,0 +1,42 @@
+# AUR packages
+# Install with your AUR helper, e.g.: yay -S --needed - < aurlist.txt
+
+ast-grep-bin
+biome-bin
+bun-bin
+caddy
+cloudflared-bin
+fnm-bin
+gitleaks
+gum
+mkcert
+ncspot
+pgcli
+pnpm
+presenterm
+sshpass
+tailspin
+trash-cli
+trufflehog-bin
+typescript
+uv
+yarn
+eza # also in official repos, but version may differ
+
+# CLI tools with no direct equivalent — install manually
+# act (github actions local runner) — aur/act
+# diff-so-fancy — aur/diff-so-fancy (not needed if using delta)
+# eye-d3 — pip install eyeD3
+# golangci-lint — aur/golangci-lint-bin
+# spotify_player — aur/spotify-player
+# streamrip — pip install streamrip
+# vercel-cli — npm i -g vercel
+# graphite — npm i -g @withgraphite/graphite-cli
+
+# GUI apps (install via pacman/AUR)
+# ghostty — aur/ghostty
+# obsidian — aur/obsidian
+# 1password — aur/1password
+# zed — aur/zed-editor
+# zen-browser — aur/zen-browser-bin
+# cursor — aur/cursor-bin

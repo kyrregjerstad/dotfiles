@@ -1,0 +1,82 @@
+# Official repo packages
+# Install: pacman -S --needed - < pkglist.txt
+
+# Core tools
+git
+git-lfs
+neovim
+tmux
+stow
+wget
+cmake
+gcc
+tree
+nmap
+gnupg
+
+# Modern CLI replacements
+bat
+eza
+fd
+ripgrep
+fzf
+zoxide
+dust
+duf
+sd
+jq
+xh
+tokei
+cloc
+hyperfine
+tldr
+
+# Shell
+zsh-autosuggestions
+zsh-syntax-highlighting
+starship
+atuin
+direnv
+thefuck
+
+# Dev
+go
+rust
+python
+python-setuptools
+docker
+podman
+protobuf
+pkgconf
+redis
+postgresql
+
+# Git tools
+git-delta
+github-cli
+
+# Media
+ffmpeg
+imagemagick
+yt-dlp
+graphicsmagick
+cairo
+pango
+harfbuzz
+libpng
+libjpeg-turbo
+giflib
+zstd
+librsvg
+poppler
+ghostscript
+
+# Terminal apps
+btop
+lazygit
+lazydocker
+yazi
+glow
+micro
+lnav
+zellij
