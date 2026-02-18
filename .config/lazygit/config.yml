@@ -23,4 +23,4 @@ gui:
 git:
   pagers:
     - colorArg: always
-      pager: diff-so-fancy
+      pager: delta --dark --paging=never

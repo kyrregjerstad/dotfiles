@@ -177,6 +177,10 @@ alias -g P='paste | '
 bindkey -v
 export KEYTIMEOUT=1
 
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
     echo -ne '\e[1 q'
