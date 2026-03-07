@@ -54,10 +54,6 @@
   autoSetupRemote = true
   default = current
   recurseSubmodules = on-demand
-
-[submodule]
-  recurse = true
-
 [pull]
   default = current
 
