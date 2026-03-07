@@ -84,6 +84,7 @@ alias gca='git commit --amend --no-edit'
 gP() { git push -u origin "$(git branch --show-current)"; }
 alias gp='git pull'
 alias gl='git log --graph --all --pretty=format:"%C(magenta)%h %C(white) %an  %ar%C(blue)  %D%n%s%n"'
+alias gPnv='git push --no-verify'
 
 alias ghid='gh issue develop'
 
@@ -117,6 +118,9 @@ alias ld='lazydocker'
 alias z='zellij'
 alias cl='claude'
 alias cld='claude --dangerously-skip-permissions'
+
+# Worktrunk
+alias wsc='wt switch --create --execute="claude --dangerously-skip-permissions"'
 
 # Yazi with cd-on-exit
 y() {
@@ -164,6 +168,7 @@ add() {
   fi
 }
 
+alias c='cursor .'
 alias d='run dev'
 alias build='run build'
 alias check='run check'
@@ -243,3 +248,8 @@ command -v direnv &>/dev/null && eval "$(direnv hook zsh)"
 [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 true
+
+# bun completions
+[ -s "/Users/k/.bun/_bun" ] && source "/Users/k/.bun/_bun"
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
