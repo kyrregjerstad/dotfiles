@@ -1,7 +1,15 @@
 keybinds clear-defaults=true {
     locked {
         bind "Super l" { SwitchToMode "normal"; }
-        bind "super d" { NewPane; }
+        bind "super d" { NewPane "right"; }
+        bind "super D" { NewPane "down"; }
+        bind "super k" { Run "claude" { args "--dangerously-skip-permissions"; }; }
+        bind "super s" {
+            LaunchOrFocusPlugin "session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
     }
     pane {
         bind "left" { MoveFocus "left"; }
@@ -169,6 +177,105 @@ keybinds clear-defaults=true {
     shared_except "locked" "renametab" "renamepane" {
         bind "Ctrl g" { SwitchToMode "locked"; }
         bind "Ctrl q" { Quit; }
+        bind "Ctrl y" {
+            LaunchOrFocusPlugin "https://github.com/karimould/zellij-forgot/releases/latest/download/zellij_forgot.wasm" {
+                floating true
+
+                // Global
+                "lock"                    "ctrl + g"
+                "quit"                    "ctrl + q"
+                "forgot"                  "ctrl + y"
+
+                // Locked mode
+                "unlock (locked)"         "super + l"
+                "new pane right (locked)"  "super + d"
+                "new pane down (locked)"   "super + shift + d"
+
+                // Mode switching
+                "pane mode"               "p"
+                "tab mode"                "t"
+                "resize mode"             "r"
+                "move mode"               "m"
+                "scroll mode"             "s"
+                "session mode"            "o"
+
+                // Normal/Locked shared
+                "new pane"                "ctrl + alt + n"
+                "toggle floating panes"   "ctrl + alt + f"
+                "move focus left"         "ctrl + alt + h"
+                "move focus down"         "ctrl + alt + j"
+                "move focus up"           "ctrl + alt + k"
+                "move focus right"        "ctrl + alt + l"
+                "move tab left"           "ctrl + alt + i"
+                "move tab right"          "ctrl + alt + o"
+                "resize increase"         "ctrl + alt + ="
+                "resize decrease"         "ctrl + alt + -"
+                "prev swap layout"        "ctrl + alt + ["
+                "next swap layout"        "ctrl + alt + ]"
+                "toggle pane in group"    "alt + p"
+                "toggle group marking"    "alt + shift + p"
+
+                // Pane mode
+                "pane: new"               "n"
+                "pane: new down"          "d"
+                "pane: new right"         "r"
+                "pane: new stacked"       "s"
+                "pane: close"             "x"
+                "pane: fullscreen"        "f"
+                "pane: rename"            "c"
+                "pane: floating"          "w"
+                "pane: embed/float"       "e"
+                "pane: pin"               "i"
+                "pane: toggle frames"     "z"
+                "pane: move focus"        "h/j/k/l"
+                "pane: switch focus"      "tab"
+
+                // Tab mode
+                "tab: new"                "n"
+                "tab: close"              "x"
+                "tab: rename"             "r"
+                "tab: sync"               "s"
+                "tab: break pane"         "b"
+                "tab: break pane left"    "["
+                "tab: break pane right"   "]"
+                "tab: go to tab 1-9"      "1-9"
+                "tab: navigate"           "h/j/k/l"
+                "tab: toggle last"        "tab"
+
+                // Resize mode
+                "resize: increase"        "h/j/k/l"
+                "resize: decrease"        "H/J/K/L"
+                "resize: increase all"    "+/="
+                "resize: decrease all"    "-"
+
+                // Move mode
+                "move: direction"         "h/j/k/l"
+                "move: next"              "n / tab"
+                "move: previous"          "p"
+
+                // Scroll mode
+                "scroll: down/up"         "j/k"
+                "scroll: half page"       "d/u"
+                "scroll: page"            "ctrl+f / ctrl+b"
+                "scroll: edit scrollback" "e"
+                "scroll: search"          "f"
+
+                // Search mode
+                "search: next"            "n"
+                "search: prev"            "p"
+                "search: case sensitive"  "c"
+                "search: whole word"      "o"
+                "search: wrap"            "w"
+
+                // Session mode
+                "session: detach"         "d"
+                "session: manager"        "w"
+                "session: config"         "c"
+                "session: plugins"        "p"
+                "session: about"          "a"
+                "session: share"          "s"
+            }
+        }
     }
     shared_except "locked" "entersearch" {
         bind "enter" { SwitchToMode "locked"; }
@@ -372,7 +479,7 @@ custom-mocha {
             emphasis_3 245 194 231
         }
         frame_selected {
-            base 166 227 161
+            base 180 190 254
             background 0 0 0
             emphasis_0 250 179 135
             emphasis_1 137 220 235
@@ -424,7 +531,7 @@ custom-mocha {
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-theme "molokai-dark"
+theme "custom-mocha"
  
 // Choose the base input mode of zellij.
 // Default: normal
