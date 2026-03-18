@@ -113,11 +113,13 @@ alias cdr='cd $(git rev-parse --show-toplevel)'
 
 alias nz='nvim ~/.zshrc'
 
-alias lz='lazygit'
+alias lg='lazygit'
 alias ld='lazydocker'
 alias z='zellij'
+alias zj='zellij attach "$(zellij list-sessions -n -r -s | head -1)" 2>/dev/null || zellij'
 alias cl='claude'
 alias cld='claude --dangerously-skip-permissions'
+alias cldc='claude --dangerously-skip-permissions --continue'
 
 # Worktrunk
 alias wsc='wt switch --create --execute="claude --dangerously-skip-permissions"'
