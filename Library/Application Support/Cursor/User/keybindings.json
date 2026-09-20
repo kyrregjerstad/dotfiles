@@ -1,30 +1,25 @@
 // Place your key bindings in this file to override the defaults
 [
-  {
-    "key": "cmd+i",
-    "command": "composerMode.agent",
-  },
-  {
-    "key": "shift+enter",
-    "command": "workbench.action.terminal.sendSequence",
-    "args": {
-      "text": "\u001b\r",
-    },
-    "when": "terminalFocus",
-  },
-  {
-    "key": "shift+cmd+enter",
-    "command": "workbench.action.toggleMaximizedPanel",
-    "when": "panelAlignment == 'center' || panelPosition != 'bottom' && panelPosition != 'top'",
-  },
-  {
-    "key": "alt+cmd+s",
-    "command": "workbench.action.toggleUnifiedSidebarFromKeyboard",
-    "when": "cursor.agentIdeUnification.enabled == true && !isAuxiliaryWindowFocusedContext"
-  },
-  {
-    "key": "alt+cmd+s",
-    "command": "workbench.action.toggleUnifiedSidebarFromKeyboard",
-    "when": "cursor.agentIdeUnification.enabled == true && !isAuxiliaryWindowFocusedContext"
-  },
+	{
+		"key": "cmd+i",
+		"command": "composerMode.agent"
+	},
+	{
+		"key": "shift+enter",
+		"command": "workbench.action.terminal.sendSequence",
+		"args": {
+			"text": "\u001b\r"
+		},
+		"when": "terminalFocus"
+	},
+	{
+		"key": "shift+cmd+enter",
+		"command": "workbench.action.toggleMaximizedPanel",
+		"when": "panelAlignment == 'center' || panelPosition != 'bottom' && panelPosition != 'top'"
+	},
+	{
+		"key": "alt+cmd+s",
+		"command": "workbench.action.toggleUnifiedSidebarFromKeyboard",
+		"when": "cursor.agentIdeUnification.enabled == true && !isAuxiliaryWindowFocusedContext"
+	}
 ]
