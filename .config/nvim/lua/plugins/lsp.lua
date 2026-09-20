@@ -3,8 +3,13 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        tsgo = { enabled = false },
         vtsls = {
-          root_dir = require("lspconfig.util").root_pattern(".git"),
+          settings = {
+            vtsls = {
+              autoUseWorkspaceTsdk = true,
+            },
+          },
         },
       },
     },
